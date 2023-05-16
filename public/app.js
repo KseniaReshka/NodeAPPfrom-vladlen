@@ -9,18 +9,19 @@ document.addEventListener('click', event => {
 
   if (event.target.dataset.type === 'edit') {
     const id = event.target.dataset.id
-    const name = event.target.dataset.name
+    const name = event.target.dataset.title
      const result = prompt('введите новое название',`${name}`);
     console.log('result',result);
-    // console.log('event.target.li',event.target.closest('li').textContent);
     if(result !== null){
-      edit(id, result).then(()=>{
-       console.log('Hi');
-       
+      edit(id, result).then((resolve)=>{
+        console.log('Hi');
+        // const x=event.target.closest('span')
+        console.log('response',resolve);
     })
     }
  }
- })
+})
+
 
 
 async function remove(id) {
@@ -28,5 +29,11 @@ async function remove(id) {
 }
 
 async function edit(id,data) {
-  await fetch(`/${id}`, {method: 'PUT',  body: JSON.stringify(data)})
+  await fetch(`/${id}`, {
+    method: 'PUT', 
+  //   headers: {
+  //   'Accept': 'application/json',
+  //   'Content-Type': 'application/json'
+  // },
+   body: JSON.stringify(data)})
 }
