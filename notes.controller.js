@@ -42,28 +42,22 @@ async function removeNote(id) {
   const filtered = notes.filter(note => note.id !== id)
 
   await saveNotes(filtered)
+  console.log("x", await saveNotes(filtered));
   console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
 async function editNote(id,content) {
   const notes = await getNotes()
-
-  const filtered = notes.map(note => {
-    console.log("note", note);
-    if(note.id === id){
-      return note = {
-        title:content,
-        id: id
-      }
-    }
-    return note
-  })
-
-  await saveNotes(filtered)
+  const index = notes.findIndex((note) => note.id === id)
+  const newNotes=[...notes]
+  console.log("content",content);
+  newNotes[index].title = content
+  await saveNotes(newNotes)
+  
   console.log(chalk.green(`Note with id="${id}" has been edit.`))
 }
 
 
 module.exports = {
-  addNote, getNotes, removeNote,editNote
+  addNote, getNotes, removeNote, editNote
 }
